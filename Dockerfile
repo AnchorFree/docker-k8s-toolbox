@@ -6,7 +6,7 @@ RUN apk --no-cache add ca-certificates git \
     && wget https://github.com/sgerrand/alpine-pkg-git-crypt/releases/download/0.6.0-r0/git-crypt-0.6.0-r0.apk \
     && apk add git-crypt-0.6.0-r0.apk \
     && rm git-crypt-0.6.0-r0.apk \
-    && apk add --update make openssh
+    && apk add --update make openssh jq
 
 RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
