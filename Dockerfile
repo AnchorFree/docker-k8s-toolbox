@@ -11,7 +11,7 @@ RUN apk --no-cache add ca-certificates git \
 RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
-ENV HELM_VERSION v2.9.1
+ENV HELM_VERSION v2.10.0
 RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
  && tar -zxf /tmp/helm.tar.gz -C /tmp/ \
  && cp /tmp/linux-amd64/helm /usr/local/bin/ \
