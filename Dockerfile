@@ -34,6 +34,11 @@ RUN mkdir -p "$(helm home)/plugins" \
 
 COPY --from=helmfile /go/src/github.com/roboll/helmfile/dist/helmfile_linux_amd64 /usr/local/bin/helmfile
 
+ENV VAULT_VERSION 0.10.1
+RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip \
+ && unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip \
+ && rm vault_${VAULT_VERSION}_linux_amd64.zip
+
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
