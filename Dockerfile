@@ -1,5 +1,5 @@
 FROM golang:1.10.1-alpine3.7 as helmfile
-ENV HELMFILE_VERSION v0.37.0
+ENV HELMFILE_VERSION v0.40.1
 RUN apk add --no-cache make git
 RUN go get github.com/roboll/helmfile
 WORKDIR /go/src/github.com/roboll/helmfile/
@@ -18,8 +18,8 @@ RUN apk --no-cache add curl bash make openssh jq ca-certificates git \
 RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
-ENV HELM_VERSION v2.10.0
-ENV HELM_DIFF_VERSION v2.10.0+1
+ENV HELM_VERSION v2.11.0
+ENV HELM_DIFF_VERSION v2.11.0+2
 ENV HELM_SECRET_VERSION v1.3.1
 ENV HELM_HOME /helm
 RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
