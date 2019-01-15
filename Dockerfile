@@ -18,7 +18,7 @@ RUN apk --no-cache add curl bash make openssh jq ca-certificates git \
 RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
-ENV HELM_VERSION v2.12.1
+ENV HELM_VERSION v2.12.2
 ENV HELM_DIFF_VERSION v2.11.0+2
 ENV HELM_SECRET_VERSION v1.3.1
 ENV HELM_HOME /helm
