@@ -1,5 +1,5 @@
 FROM golang:1.10.1-alpine3.7 as helmfile
-ENV HELMFILE_VERSION v0.40.1
+ENV HELMFILE_VERSION v0.45.3
 RUN apk add --no-cache make git
 RUN go get github.com/roboll/helmfile
 WORKDIR /go/src/github.com/roboll/helmfile/
@@ -19,7 +19,7 @@ RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-r
     && chmod +x /usr/local/bin/kubectl
 
 ENV HELM_VERSION v2.12.2
-ENV HELM_DIFF_VERSION v2.11.0+2
+ENV HELM_DIFF_VERSION v2.11.0+3
 ENV HELM_SECRET_VERSION v1.3.1
 ENV HELM_HOME /helm
 RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
@@ -38,6 +38,9 @@ ENV VAULT_VERSION 0.10.1
 RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip \
  && unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip \
  && rm vault_${VAULT_VERSION}_linux_amd64.zip
+
+RUN curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator \
+ && chmod +x /usr/local/bin/aws-iam-authenticator
 
 COPY entrypoint.sh /entrypoint.sh
 
