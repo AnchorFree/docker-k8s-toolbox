@@ -44,11 +44,6 @@ RUN apk -v --update add \
         pip3 install awscli==${AWS_CLI_VERSION} --upgrade && \
         rm /var/cache/apk/*
 
-RUN adduser -D -u 1000 -s /bin/bash k8s-toolbox
+COPY entrypoint.sh /entrypoint.sh
 
-USER k8s-toolbox
-WORKDIR /home/k8s-toolbox
-
-COPY entrypoint.sh entrypoint.sh
-
-ENTRYPOINT ["/home/k8s-toolbox/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
