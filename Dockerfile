@@ -23,7 +23,7 @@ RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/he
  && cp /tmp/linux-amd64/helm /usr/local/bin/ \
  && rm -rf /tmp/linux-amd64/ /tmp/helm.tar.gz
 
-RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v0.54.0/helmfile_linux_amd64 \
+RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
 
 RUN mkdir -p "$(helm home)/plugins" \
