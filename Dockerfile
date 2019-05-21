@@ -3,7 +3,7 @@ FROM alpine:3.9.3
 ENV HELM_VERSION v2.13.1
 ENV HELM_DIFF_VERSION v2.11.0+5
 ENV HELM_SECRET_VERSION v1.3.1
-ENV HELMFILE_VERSION 0.63.1
+ENV HELMFILE_VERSION 0.54.2
 ENV AWS_IAM_AUTH_VERSION 0.4.0
 ENV VAULT_VERSION 1.0.1
 ENV AWS_CLI_VERSION 1.16.140
@@ -23,7 +23,7 @@ RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/he
  && cp /tmp/linux-amd64/helm /usr/local/bin/ \
  && rm -rf /tmp/linux-amd64/ /tmp/helm.tar.gz
 
-RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 \
+RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
 
 RUN mkdir -p "$(helm home)/plugins" \
