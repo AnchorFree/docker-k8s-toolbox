@@ -4,7 +4,7 @@ ENV HELM_VERSION v2.13.1
 ENV HELM_DIFF_VERSION v2.11.0+3
 ENV HELM_SECRET_VERSION v1.3.1
 ENV HELMFILE_VERSION v0.54.0
-ENV AWS_IAM_AUTH_VERSION 1.12.7/2019-03-27
+ENV AWS_IAM_AUTH_VERSION 0.4.0
 ENV VAULT_VERSION 1.0.1
 ENV AWS_CLI_VERSION 1.16.140
 
@@ -34,7 +34,12 @@ RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VER
  && unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip \
  && rm vault_${VAULT_VERSION}_linux_amd64.zip
 
-RUN curl -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/${AWS_IAM_AUTH_VERSION}/bin/linux/amd64/aws-iam-authenticator \
+RUN curl -L -o aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 \
+ && curl -L -o authenticator_checksums.txt https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/authenticator_${AWS_IAM_AUTH_VERSION}_checksums.txt \
+ && cat authenticator_checksums.txt | grep aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 > authenticator_checksums_new.txt \
+ && sha256sum -c authenticator_checksums_new.txt \
+ && rm -f authenticator_checksums.txt authenticator_checksums_new.txt \
+ && mv aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 /usr/local/bin/aws-iam-authenticator \
  && chmod +x /usr/local/bin/aws-iam-authenticator
 
 RUN apk -v --update add \
