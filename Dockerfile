@@ -7,6 +7,7 @@ ENV HELMFILE_VERSION 0.54.2
 ENV AWS_IAM_AUTH_VERSION 0.4.0
 ENV VAULT_VERSION 1.0.1
 ENV AWS_CLI_VERSION 1.16.140
+ENV GOMPLATE_VERSION 3.1.0-r0
 
 RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext groff less \
     && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-git-crypt/master/sgerrand.rsa.pub \
@@ -42,6 +43,8 @@ RUN curl -L -o aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 https:/
  && rm -f authenticator_checksums.txt authenticator_checksums_new.txt \
  && mv aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 /usr/local/bin/aws-iam-authenticator \
  && chmod +x /usr/local/bin/aws-iam-authenticator
+
+RUN apk add --no-cache "gomplate=$GOMPLATE_VERSION"
 
 RUN apk -v --update add \
         python3 \
