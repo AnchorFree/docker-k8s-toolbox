@@ -1,12 +1,12 @@
 FROM alpine:3.9.3
 
-ENV HELM_VERSION v2.14.2
+ENV HELM_VERSION v2.16.0
 ENV HELM_DIFF_VERSION v2.11.0+5
 ENV HELM_SECRET_VERSION v1.3.1
-ENV HELMFILE_VERSION 0.80.2
+ENV HELMFILE_VERSION 0.90.8
 ENV AWS_IAM_AUTH_VERSION 0.4.0
 ENV VAULT_VERSION 1.0.1
-ENV AWS_CLI_VERSION 1.16.140
+ENV AWS_CLI_VERSION 1.16.276
 
 RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext groff less \
     && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-git-crypt/master/sgerrand.rsa.pub \
