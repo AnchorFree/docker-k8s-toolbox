@@ -30,11 +30,6 @@ RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/he
 RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
 
-RUN mkdir -p "$(helm home)/plugins" \
- && helm plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
- && helm plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
- && rm -rf /tmp/helm-diff /tmp/helm-diff.tgz
-
 RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip \
  && unzip -d /bin vault_${VAULT_VERSION}_linux_amd64.zip \
  && rm vault_${VAULT_VERSION}_linux_amd64.zip
@@ -44,6 +39,13 @@ RUN curl -sLo /tmp/helm-v3.tar.gz https://get.helm.sh/helm-${HELM_V3_VERSION}-li
  && tar -zxf /tmp/helm-v3.tar.gz -C /tmp/ \
  && cp /tmp/linux-amd64/helm /usr/local/bin/helm3 \
  && rm -rf /tmp/linux-amd64/ /tmp/helm-v3.tar.gz
+
+RUN mkdir -p "$(helm home)/plugins" \
+ && helm plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
+ && helm3 plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
+ && helm plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
+ && helm3 plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
+ && rm -rf /tmp/helm-diff /tmp/helm-diff.tgz
 
 RUN curl -L -o aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 \
  && curl -L -o authenticator_checksums.txt https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/authenticator_${AWS_IAM_AUTH_VERSION}_checksums.txt \
