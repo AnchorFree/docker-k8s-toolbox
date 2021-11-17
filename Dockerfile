@@ -23,10 +23,6 @@ RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-r
 
 ENV HELM_HOME /helm
 RUN DESIRED_VERSION="$HELM_VERSION"  curl https://raw.githubusercontent.com/helm/helm/main/scripts/get | bash
-#RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
-# && tar -zxf /tmp/helm.tar.gz -C /tmp/ \
-# && cp /tmp/linux-amd64/helm /usr/local/bin/ \
-# && rm -rf /tmp/linux-amd64/ /tmp/helm.tar.gz
 
 RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
