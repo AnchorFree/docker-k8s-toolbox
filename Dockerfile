@@ -1,6 +1,6 @@
 FROM alpine:3.9.3
 
-ENV HELM_VERSION v2.16.6
+ENV HELM_VERSION v2.17.0
 ENV HELM_DIFF_VERSION v3.1.3
 ENV HELM_SECRET_VERSION v1.3.1
 ENV HELM_V3_VERSION v3.1.2
@@ -22,10 +22,7 @@ RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-r
     && chmod +x /usr/local/bin/kubectl
 
 ENV HELM_HOME /helm
-RUN curl -sLo /tmp/helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz \
- && tar -zxf /tmp/helm.tar.gz -C /tmp/ \
- && cp /tmp/linux-amd64/helm /usr/local/bin/ \
- && rm -rf /tmp/linux-amd64/ /tmp/helm.tar.gz
+RUN curl -s https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | tar -zxf - -C /usr/local/bin --strip-components=1 linux-amd64/helm
 
 RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
