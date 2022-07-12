@@ -9,6 +9,7 @@ ENV HELMFILE_VERSION 0.144.0
 ENV AWS_IAM_AUTH_VERSION 0.4.0
 ENV VAULT_VERSION 1.3.1
 ENV AWS_CLI_VERSION 1.16.276
+ENV KUBECTL_VERSION v1.20.15
 
 RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext groff less \
     && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-git-crypt/master/sgerrand.rsa.pub \
@@ -18,7 +19,7 @@ RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext gro
 
 # TODO: kubectl officially support k8s +1 and -2 minor versions
 # for now stable k8s is 1.17.1, for example on k8s-core we have k8s 1.13
-RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
 ENV HELM_HOME /helm
