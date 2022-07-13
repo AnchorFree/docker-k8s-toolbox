@@ -17,13 +17,13 @@ RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext gro
     && apk add git-crypt-0.6.0-r1.apk \
     && rm git-crypt-0.6.0-r1.apk
 
-# TODO: kubectl officially support k8s +1 and -2 minor versions
-# for now stable k8s is 1.17.1, for example on k8s-core we have k8s 1.13
 RUN curl -sLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
 
-ENV HELM_HOME /helm
-RUN curl -s https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | tar -zxf - -C /usr/local/bin --strip-components=1 linux-amd64/helm
+RUN curl -sLo /tmp/helm-v2.tar.gz https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz \
+  && tar -zxf /tmp/helm-v2.tar.gz -C /tmp/ \
+  && cp /tmp/linux-amd64/helm /usr/local/bin/helm2 \
+  && rm -rf /tmp/linux-amd64/ /tmp/helm-v2.tar.gz
 
 RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
  && chmod +x /usr/local/bin/helmfile
@@ -35,8 +35,10 @@ RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VER
 RUN curl -sLo /tmp/helm-v3.tar.gz https://get.helm.sh/helm-${HELM_V3_VERSION}-linux-amd64.tar.gz \
  && echo "${HELM_V3_SHA256}  /tmp/helm-v3.tar.gz" | sha256sum -c - \
  && tar -zxf /tmp/helm-v3.tar.gz -C /tmp/ \
- && cp /tmp/linux-amd64/helm /usr/local/bin/helm3 \
+ && cp /tmp/linux-amd64/helm /usr/local/bin/helm \
  && rm -rf /tmp/linux-amd64/ /tmp/helm-v3.tar.gz
+
+ENV HELM_HOME /helm
 
 RUN mkdir -p "$(helm home)/plugins" \
  && helm plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
