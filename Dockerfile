@@ -42,9 +42,9 @@ ENV HELM_HOME /helm
 
 RUN mkdir -p "$(helm home)/plugins" \
  && helm plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
- && helm3 plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
+ && helm2 plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
  && helm plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
- && helm3 plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
+ && helm2 plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
  && rm -rf /tmp/helm-diff /tmp/helm-diff.tgz
 
 RUN curl -L -o aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWS_IAM_AUTH_VERSION}/aws-iam-authenticator_${AWS_IAM_AUTH_VERSION}_linux_amd64 \
