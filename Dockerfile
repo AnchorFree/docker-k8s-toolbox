@@ -40,7 +40,7 @@ RUN curl -sLo /tmp/helm-v3.tar.gz https://get.helm.sh/helm-${HELM_V3_VERSION}-li
 
 ENV HELM_HOME /helm
 
-RUN mkdir -p "$(helm home)/plugins" \
+RUN mkdir -p "$(helm2 home)/plugins" \
  && helm plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
  && helm2 plugin install https://github.com/databus23/helm-diff --version="${HELM_DIFF_VERSION}" \
  && helm plugin install https://github.com/futuresimple/helm-secrets --version="${HELM_SECRET_VERSION}" \
