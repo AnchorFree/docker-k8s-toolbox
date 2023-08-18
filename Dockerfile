@@ -1,15 +1,15 @@
 FROM alpine:3.9.3
 
 ENV HELM_VERSION v2.17.0
-ENV HELM_DIFF_VERSION v3.5.0
+ENV HELM_DIFF_VERSION v3.8.1
 ENV HELM_SECRET_VERSION v1.3.1
-ENV HELM_V3_VERSION v3.7.2
-ENV HELM_V3_SHA256 4ae30e48966aba5f807a4e140dad6736ee1a392940101e4d79ffb4ee86200a9e 
-ENV HELMFILE_VERSION 0.144.0
+ENV HELM_V3_VERSION v3.12.3
+ENV HELM_V3_SHA256 1b2313cd198d45eab00cc37c38f6b1ca0a948ba279c29e322bdf426d406129b5
+ENV HELMFILE_VERSION 0.155.1
 ENV AWS_IAM_AUTH_VERSION 0.6.2
-ENV VAULT_VERSION 1.3.1
+ENV VAULT_VERSION 1.12.3
 ENV AWS_CLI_VERSION 1.16.276
-ENV KUBECTL_VERSION v1.20.15
+ENV KUBECTL_VERSION v1.23.17
 
 RUN apk --no-cache add curl bash make openssh jq ca-certificates git gettext groff less \
     && wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-git-crypt/master/sgerrand.rsa.pub \
@@ -25,7 +25,9 @@ RUN curl -sLo /tmp/helm-v2.tar.gz https://get.helm.sh/helm-${HELM_VERSION}-linux
   && cp /tmp/linux-amd64/helm /usr/local/bin/helm2 \
   && rm -rf /tmp/linux-amd64/ /tmp/helm-v2.tar.gz
 
-RUN curl -sLo /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 \
+RUN curl -sLo /tmp/helmfile.tar.gz https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz \
+ && tar -zxf /tmp/helmfile.tar.gz -C /tmp/ \
+ && cp /tmp/helmfile /usr/local/bin/helmfile \
  && chmod +x /usr/local/bin/helmfile
 
 RUN wget https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip \
